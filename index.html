@@ -33,134 +33,37 @@
   </header>
 
   <main id="main">
-    <!-- HERO: Alberta badlands + aviation -->
+    <!-- HERO: real Alberta badlands photo (Dinosaur Provincial Park), darkened for legibility -->
     <section id="top" class="hero" aria-labelledby="hero-heading">
-      <div class="hero-sky" aria-hidden="true">
-        <svg class="hero-landscape" viewBox="0 0 1440 520" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1e1b4b"/>
-              <stop offset="35%" stop-color="#5b3a6b"/>
-              <stop offset="65%" stop-color="#c45c3e"/>
-              <stop offset="100%" stop-color="#e8a05c"/>
-            </linearGradient>
-            <linearGradient id="hoodooFar" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#a85a3a"/>
-              <stop offset="100%" stop-color="#7a3d28"/>
-            </linearGradient>
-            <linearGradient id="hoodooMid" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#c46a3a"/>
-              <stop offset="50%" stop-color="#9a4a2a"/>
-              <stop offset="100%" stop-color="#6b3420"/>
-            </linearGradient>
-            <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#8b5a3c"/>
-              <stop offset="100%" stop-color="#3d2a1f"/>
-            </linearGradient>
-          </defs>
-          <!-- Sky -->
-          <rect width="1440" height="520" fill="url(#skyGrad)"/>
-          <!-- Distant coulee layers -->
-          <path fill="#6b3d4a" opacity="0.55" d="M0 280 Q180 240 360 270 T720 250 T1080 275 T1440 255 L1440 520 L0 520 Z"/>
-          <path fill="#8a4a38" opacity="0.7" d="M0 310 Q220 270 440 300 T880 285 T1440 305 L1440 520 L0 520 Z"/>
-          <!-- Far hoodoos -->
-          <g fill="url(#hoodooFar)" opacity="0.85">
-            <path d="M980 320 L1005 200 L1025 200 L1045 320 Z"/>
-            <path d="M1035 320 L1055 230 L1070 230 L1090 320 Z"/>
-            <path d="M1120 320 L1140 210 L1165 210 L1185 320 Z"/>
-            <path d="M1200 320 L1225 185 L1250 185 L1275 320 Z"/>
-            <rect x="1000" y="195" width="30" height="12" rx="2"/>
-            <rect x="1052" y="225" width="22" height="10" rx="2"/>
-            <rect x="1135" y="205" width="35" height="12" rx="2"/>
-            <rect x="1220" y="180" width="35" height="12" rx="2"/>
-          </g>
-          <!-- Mid ground with sage scrub -->
-          <path fill="url(#groundGrad)" d="M0 360 Q200 330 400 355 T800 340 T1200 360 T1440 350 L1440 520 L0 520 Z"/>
-          <!-- Near hoodoos left -->
-          <g fill="url(#hoodooMid)">
-            <path d="M60 380 L90 260 L120 260 L145 380 Z"/>
-            <path d="M130 380 L155 290 L175 290 L200 380 Z"/>
-            <path d="M250 380 L280 240 L320 240 L350 380 Z"/>
-            <rect x="85" y="255" width="40" height="14" rx="2"/>
-            <rect x="152" y="285" width="28" height="10" rx="2"/>
-            <rect x="275" y="235" width="50" height="14" rx="2"/>
-            <!-- strata lines -->
-            <path stroke="#5c2e1a" stroke-width="2" fill="none" opacity="0.4" d="M70 340 L135 340 M95 310 L130 310 M265 320 L335 320 M280 290 L325 290"/>
-          </g>
-          <!-- Sage brush dots -->
-          <g fill="#6b7f5a" opacity="0.75">
-            <ellipse cx="420" cy="370" rx="18" ry="8"/>
-            <ellipse cx="455" cy="378" rx="12" ry="6"/>
-            <ellipse cx="700" cy="355" rx="22" ry="9"/>
-            <ellipse cx="780" cy="365" rx="14" ry="6"/>
-            <ellipse cx="900" cy="372" rx="16" ry="7"/>
-            <ellipse cx="200" cy="390" rx="20" ry="8"/>
-          </g>
-          <!-- Foreground mesa edge -->
-          <path fill="#2a1f18" d="M0 430 Q300 400 600 425 T1200 415 T1440 430 L1440 520 L0 520 Z"/>
-          <!-- Dashed flight path / contrail -->
-          <path class="contrail" fill="none" stroke="#f5e6d3" stroke-width="1.5" stroke-dasharray="8 10" opacity="0.55"
-                d="M80 90 Q400 40 720 70 T1360 50"/>
-          <!-- Aircraft silhouette -->
-          <g transform="translate(1180,48) rotate(-8)" fill="#f5e6d3" opacity="0.85">
-            <ellipse cx="0" cy="0" rx="22" ry="3.5"/>
-            <path d="M-4 0 L-14 -14 L-8 -14 L2 0 Z"/>
-            <path d="M-4 0 L-14 14 L-8 14 L2 0 Z"/>
-            <path d="M16 0 L22 -6 L24 -6 L20 0 L24 5 L22 5 Z"/>
-          </g>
-        </svg>
-      </div>
+      <picture class="hero-bg" aria-hidden="true">
+        <source media="(max-width: 640px)" srcset="assets/hero-badlands-800.jpg">
+        <img src="assets/hero-badlands-1920.jpg" width="1920" height="1080" alt="" decoding="async" fetchpriority="high">
+      </picture>
+      <div class="hero-shade" aria-hidden="true"></div>
 
       <div class="wrap hero-inner">
         <div class="hero-card">
-          <div class="hero-photo-wrap">
-            <img class="hero-photo" src="assets/aaron-headshot.jpg" width="200" height="200"
-                 alt="Portrait of Aaron Lake" decoding="async">
-          </div>
+          <img class="hero-photo" src="assets/aaron-headshot.jpg" width="200" height="200"
+               alt="Portrait of Aaron Lake" decoding="async">
           <div class="hero-copy">
-            <p class="eyebrow">
-              <span class="hdg-badge" aria-hidden="true">HDG 270°</span>
-              Strathmore, AB · Remote
-            </p>
+            <p class="eyebrow">Strathmore, AB · Remote</p>
             <h1 id="hero-heading">Aaron Lake</h1>
-            <p class="role">Engineering Director · Software Architect</p>
+            <p class="role"><span class="nowrap">Engineering Director</span> · <span class="nowrap">Software Architect</span></p>
             <p class="lede">
               Hands-on engineering leader with 20+ years building software for charter aviation,
               higher education, ecommerce, and digital music. I lead local and remote teams,
               set architecture, and still write code — preferring open source and pragmatic delivery.
             </p>
             <ul class="hero-links" aria-label="Profiles">
-              <li>
-                <a class="btn btn-primary" href="https://www.linkedin.com/in/aaronofthelake" rel="noopener noreferrer">
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a class="btn btn-ghost" href="https://github.com/aaronofthelake" rel="noopener noreferrer">
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a class="btn btn-ghost" href="https://www.linkedin.com/company/90430647/" rel="noopener noreferrer">
-                  Badlands Technologies
-                </a>
-              </li>
+              <li><a class="btn btn-primary" href="https://www.linkedin.com/in/aaronofthelake" rel="noopener noreferrer">LinkedIn</a></li>
+              <li><a class="btn btn-ghost" href="https://github.com/aaronofthelake" rel="noopener noreferrer">GitHub</a></li>
+              <li><a class="btn btn-ghost" href="https://www.linkedin.com/company/90430647/" rel="noopener noreferrer">Badlands Technologies</a></li>
             </ul>
           </div>
         </div>
+        <p class="flight-note" aria-hidden="true">ALT 3,500 · HDG 270° · Alberta badlands</p>
       </div>
     </section>
-
-    <!-- altitude divider -->
-    <div class="flight-strip" aria-hidden="true">
-      <div class="wrap flight-strip-inner">
-        <span>ALT 3,500</span>
-        <span class="strip-line"></span>
-        <span>BADLANDS · AB</span>
-        <span class="strip-line"></span>
-        <span>HDG 270°</span>
-      </div>
-    </div>
 
     <section id="work" class="section" aria-labelledby="work-heading">
       <div class="wrap">
@@ -321,10 +224,9 @@
         </div>
         <div class="writing-grid">
           <article class="writing-card writing-card-featured">
-            <a class="writing-card-link" href="https://www.linkedin.com/feed/update/urn:li:share:7517788303534776321/" rel="noopener noreferrer">
-              <img class="writing-thumb" src="assets/article20_silent_agent.jpg" width="800" height="420"
-                   alt="Illustration: a robot asleep at a desk in Alberta badlands after finishing its work"
-                   decoding="async">
+            <a class="featured-link" href="https://www.linkedin.com/feed/update/urn:li:share:7517788303534776321/" rel="noopener noreferrer">
+              <img class="featured-thumb" src="assets/article20_silent_agent.jpg" width="800" height="420"
+                   alt="Illustration: a robot asleep at a desk in Alberta badlands after finishing its work">
               <div class="writing-card-body">
                 <span class="tag">Published</span>
                 <h3>An agent that fails silently is worse than no agent</h3>
@@ -450,6 +352,7 @@
   <footer class="site-footer">
     <div class="wrap">
       <p>© <span id="y">2026</span> Aaron Lake. Draft site — not published.</p>
+      <p class="photo-credit">Header photo: “<a href="https://commons.wikimedia.org/wiki/File:Badlands,_Red_Deer_River_Valley,_Dinosaur_Provincial_Park,_Alberta._(50351672813).jpg" rel="noopener noreferrer">Badlands, Red Deer River Valley, Dinosaur Provincial Park, Alberta</a>” by <a href="https://www.flickr.com/people/11200205@N02" rel="noopener noreferrer">edk7</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/" rel="noopener noreferrer">CC BY-SA 2.0</a>, resized.</p>
     </div>
   </footer>
 

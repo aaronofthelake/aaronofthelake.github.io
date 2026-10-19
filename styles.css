@@ -1,4 +1,4 @@
-/* Aaron Lake — personal site v2 (aviation + Alberta badlands). Draft. No trackers, no CDN. */
+/* Aaron Lake — personal site v3 (Alberta badlands photo + light aviation touches). Draft. No trackers, no CDN. */
 
 :root {
   --bg: #f4efe6;
@@ -40,7 +40,6 @@ html {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .contrail { stroke-dashoffset: 0 !important; }
 }
 
 body {
@@ -144,117 +143,109 @@ nav a {
 
 nav a:hover { color: var(--ink); }
 
-/* Hero */
+/* Hero — real badlands photo, darkened, centered card */
 .hero {
   position: relative;
-  padding: 0 0 3rem;
+  isolation: isolate;
   overflow: hidden;
-  min-height: 28rem;
+  display: grid;
+  align-items: center;
+  min-height: clamp(30rem, 78vh, 40rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  background: #2a1f18;
+  color: var(--cream);
 }
 
-.hero-sky {
+.hero-bg,
+.hero-bg img,
+.hero-shade {
   position: absolute;
   inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-landscape {
   width: 100%;
   height: 100%;
-  min-height: 32rem;
-  display: block;
+  z-index: -2;
+}
+
+.hero-bg img {
   object-fit: cover;
+  object-position: 50% 40%;
+  max-width: none;
 }
 
-.contrail {
-  animation: flypath 40s linear infinite;
-}
-
-@keyframes flypath {
-  from { stroke-dashoffset: 0; }
-  to { stroke-dashoffset: -180; }
+.hero-shade {
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(20, 14, 10, 0.45) 0%, rgba(20, 14, 10, 0.2) 45%, rgba(20, 14, 10, 0.6) 100%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(20, 14, 10, 0.25), transparent 75%);
 }
 
 .hero-inner {
-  position: relative;
-  z-index: 1;
-  padding-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
 }
 
 .hero-card {
+  width: 100%;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.75rem 2rem;
-  align-items: start;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(10px);
-  border: 1px solid color-mix(in srgb, var(--cream) 50%, var(--border));
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 2rem 2.5rem;
+  padding: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.25rem, 4vw, 3rem);
+  background: rgba(28, 20, 16, 0.58);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(245, 230, 211, 0.22);
   border-radius: calc(var(--radius) + 4px);
-  padding: 1.75rem 1.85rem;
-  box-shadow: var(--shadow);
-  max-width: 52rem;
-}
-
-.hero-photo-wrap {
-  flex-shrink: 0;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
 .hero-photo {
-  width: 132px;
-  height: 132px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--cream);
-  box-shadow: 0 0 0 3px var(--accent), var(--shadow);
+  box-shadow: 0 0 0 3px var(--sand), 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .hero-copy { min-width: 0; }
 
 .eyebrow {
-  margin: 0 0 0.65rem;
+  margin: 0 0 0.5rem;
   font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 650;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-deep);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.75rem;
+  color: var(--sand);
 }
 
-.hdg-badge {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  background: var(--sky-ink);
-  color: var(--cream);
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  text-transform: none;
-}
+.hero h1,
+.lede { text-wrap: balance; }
+
+.nowrap { white-space: nowrap; }
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.15rem, 5vw, 3.1rem);
-  line-height: 1.08;
+  font-size: clamp(2.2rem, 5vw, 3.25rem);
+  line-height: 1.05;
   letter-spacing: -0.03em;
-  color: var(--ink);
+  color: #fff;
 }
 
 .role {
-  margin: 0.5rem 0 1rem;
-  font-size: 1.2rem;
-  color: var(--ink-muted);
+  margin: 0.45rem 0 1rem;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--cream);
   font-weight: 550;
 }
 
 .lede {
   margin: 0 0 1.5rem;
   font-size: 1.05rem;
-  color: var(--ink);
-  max-width: 40rem;
+  color: rgba(255, 250, 243, 0.92);
+  max-width: 46rem;
 }
 
 .hero-links {
@@ -270,7 +261,7 @@ nav a:hover { color: var(--ink); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.55rem 1.1rem;
+  padding: 0.55rem 1.15rem;
   border-radius: 999px;
   font-weight: 650;
   font-size: 0.95rem;
@@ -292,44 +283,28 @@ nav a:hover { color: var(--ink); }
 }
 
 .btn-ghost {
-  background: transparent;
-  color: var(--ink);
-  border-color: var(--border);
+  background: rgba(255, 250, 243, 0.06);
+  color: var(--cream);
+  border-color: rgba(245, 230, 211, 0.5);
 }
 
 .btn-ghost:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border-color: var(--sand);
+  color: #fff;
+  background: rgba(232, 160, 92, 0.18);
 }
 
-/* Flight strip / altitude divider */
-.flight-strip {
-  background: var(--sky-ink);
-  color: var(--cream);
+.hero .btn:focus-visible { outline-color: var(--sand); }
+
+/* Subtle aviation touch under the card */
+.flight-note {
+  margin: 0;
   font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 0.55rem 0;
-  border-block: 1px solid color-mix(in srgb, var(--sand) 40%, transparent);
-}
-
-.flight-strip-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.strip-line {
-  flex: 1;
-  min-width: 2rem;
-  max-width: 8rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--sand), transparent);
-  opacity: 0.6;
+  color: rgba(245, 230, 211, 0.6);
+  text-align: center;
 }
 
 /* Sections */
@@ -517,19 +492,20 @@ nav a:hover { color: var(--ink); }
   flex-direction: column;
 }
 
-.writing-card-featured {
+.featured-link {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-}
-
-.writing-card-link {
-  display: contents;
   text-decoration: none;
   color: inherit;
+  height: 100%;
 }
 
-.writing-card-featured .writing-card-link {
-  display: contents;
+.featured-thumb {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  background: var(--bg-alt);
 }
 
 .writing-thumb {
@@ -537,12 +513,6 @@ nav a:hover { color: var(--ink); }
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background: var(--bg-alt);
-}
-
-.writing-card-featured .writing-thumb {
-  aspect-ratio: auto;
-  height: 100%;
-  min-height: 220px;
 }
 
 .writing-thumb-svg svg {
@@ -568,7 +538,7 @@ nav a:hover { color: var(--ink); }
   line-height: 1.35;
 }
 
-.writing-card-link:hover h3 {
+.featured-link:hover h3 {
   color: var(--accent);
 }
 
@@ -650,63 +620,63 @@ nav a:hover { color: var(--ink); }
 }
 
 .site-footer p {
-  margin: 0;
+  margin: 0 0 0.35rem;
   font-size: 0.875rem;
   color: var(--ink-muted);
   text-align: center;
 }
 
+.site-footer .photo-credit {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.site-footer a { color: var(--ink-muted); }
+
 /* Responsive */
 @media (max-width: 800px) {
-  .writing-card-featured {
-    grid-template-columns: 1fr;
-  }
+  .featured-link { grid-template-columns: 1fr; }
 
-  .writing-card-featured .writing-thumb {
-    min-height: 180px;
-    aspect-ratio: 16 / 9;
+  .featured-thumb {
     height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
   }
 
-  .writing-grid {
-    grid-template-columns: 1fr;
-  }
+  .writing-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 0;
+  }
+
+  nav ul { justify-content: center; gap: 0.25rem 1rem; }
+
+  .hero { min-height: 0; }
+
   .hero-card {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
-    padding: 1.4rem 1.25rem;
+    gap: 1.1rem;
   }
 
-  .hero-copy .lede { margin-inline: auto; }
+  .hero-photo { width: 116px; height: 116px; }
+
+  .lede { margin-inline: auto; font-size: 1rem; }
 
   .hero-links { justify-content: center; }
-
-  .eyebrow { justify-content: center; }
-
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-inner { padding-top: 2.25rem; }
-
-  .hero-photo {
-    width: 112px;
-    height: 112px;
-  }
-
-  nav ul { gap: 0.5rem 0.9rem; }
 }
 
-/* Contrast boost for dusk text over hero — card already light */
+/* Contrast boost for text over the hero photo */
 @media (prefers-contrast: more) {
   .hero-card {
-    background: var(--surface);
-    border-color: var(--ink);
+    background: rgba(20, 14, 10, 0.85);
+    border-color: var(--cream);
   }
 
   .btn-primary { border-width: 2px; }
