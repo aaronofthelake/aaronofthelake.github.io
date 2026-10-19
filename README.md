@@ -1,14 +1,18 @@
-# Aaron Lake — personal site (draft)
+# Aaron Lake — personal site (draft v2)
 
 One-page personal site intended for GitHub Pages at `aaronofthelake.github.io`.
+
+**Theme:** Alberta badlands + aviation (sunset hoodoos, flight path, altitude strip).
 
 **Status:** local draft only. No remote, no Pages enablement, not live.
 
 ## Contents
 
 - `index.html` — single page
-- `styles.css` — styles (no build step)
-- `preview.png` — full-page screenshot for review
+- `styles.css` — styles (no build step, no CDN)
+- `assets/aaron-headshot.jpg` — LinkedIn public profile photo
+- `assets/article20_silent_agent.jpg` — Badlands article graphic
+- `preview-v2.png` / `preview-v2-mobile.png` — review screenshots
 
 ## Local preview
 

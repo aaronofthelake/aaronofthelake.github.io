@@ -13,7 +13,14 @@
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="logo" href="#top">Aaron Lake</a>
+      <a class="logo" href="#top">
+        <svg class="logo-mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M4 22 L16 6 L28 22 Z" opacity="0.9"/>
+          <path fill="none" stroke="currentColor" stroke-width="1.5" d="M6 20 Q16 12 26 20" opacity="0.7"/>
+          <circle cx="16" cy="18" r="2" fill="currentColor"/>
+        </svg>
+        <span>Aaron Lake</span>
+      </a>
       <nav aria-label="Primary">
         <ul>
           <li><a href="#work">What I do</a></li>
@@ -26,29 +33,151 @@
   </header>
 
   <main id="main">
+    <!-- HERO: Alberta badlands + aviation -->
     <section id="top" class="hero" aria-labelledby="hero-heading">
+      <div class="hero-sky" aria-hidden="true">
+        <svg class="hero-landscape" viewBox="0 0 1440 520" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1e1b4b"/>
+              <stop offset="35%" stop-color="#5b3a6b"/>
+              <stop offset="65%" stop-color="#c45c3e"/>
+              <stop offset="100%" stop-color="#e8a05c"/>
+            </linearGradient>
+            <linearGradient id="hoodooFar" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a85a3a"/>
+              <stop offset="100%" stop-color="#7a3d28"/>
+            </linearGradient>
+            <linearGradient id="hoodooMid" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#c46a3a"/>
+              <stop offset="50%" stop-color="#9a4a2a"/>
+              <stop offset="100%" stop-color="#6b3420"/>
+            </linearGradient>
+            <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#8b5a3c"/>
+              <stop offset="100%" stop-color="#3d2a1f"/>
+            </linearGradient>
+          </defs>
+          <!-- Sky -->
+          <rect width="1440" height="520" fill="url(#skyGrad)"/>
+          <!-- Distant coulee layers -->
+          <path fill="#6b3d4a" opacity="0.55" d="M0 280 Q180 240 360 270 T720 250 T1080 275 T1440 255 L1440 520 L0 520 Z"/>
+          <path fill="#8a4a38" opacity="0.7" d="M0 310 Q220 270 440 300 T880 285 T1440 305 L1440 520 L0 520 Z"/>
+          <!-- Far hoodoos -->
+          <g fill="url(#hoodooFar)" opacity="0.85">
+            <path d="M980 320 L1005 200 L1025 200 L1045 320 Z"/>
+            <path d="M1035 320 L1055 230 L1070 230 L1090 320 Z"/>
+            <path d="M1120 320 L1140 210 L1165 210 L1185 320 Z"/>
+            <path d="M1200 320 L1225 185 L1250 185 L1275 320 Z"/>
+            <rect x="1000" y="195" width="30" height="12" rx="2"/>
+            <rect x="1052" y="225" width="22" height="10" rx="2"/>
+            <rect x="1135" y="205" width="35" height="12" rx="2"/>
+            <rect x="1220" y="180" width="35" height="12" rx="2"/>
+          </g>
+          <!-- Mid ground with sage scrub -->
+          <path fill="url(#groundGrad)" d="M0 360 Q200 330 400 355 T800 340 T1200 360 T1440 350 L1440 520 L0 520 Z"/>
+          <!-- Near hoodoos left -->
+          <g fill="url(#hoodooMid)">
+            <path d="M60 380 L90 260 L120 260 L145 380 Z"/>
+            <path d="M130 380 L155 290 L175 290 L200 380 Z"/>
+            <path d="M250 380 L280 240 L320 240 L350 380 Z"/>
+            <rect x="85" y="255" width="40" height="14" rx="2"/>
+            <rect x="152" y="285" width="28" height="10" rx="2"/>
+            <rect x="275" y="235" width="50" height="14" rx="2"/>
+            <!-- strata lines -->
+            <path stroke="#5c2e1a" stroke-width="2" fill="none" opacity="0.4" d="M70 340 L135 340 M95 310 L130 310 M265 320 L335 320 M280 290 L325 290"/>
+          </g>
+          <!-- Sage brush dots -->
+          <g fill="#6b7f5a" opacity="0.75">
+            <ellipse cx="420" cy="370" rx="18" ry="8"/>
+            <ellipse cx="455" cy="378" rx="12" ry="6"/>
+            <ellipse cx="700" cy="355" rx="22" ry="9"/>
+            <ellipse cx="780" cy="365" rx="14" ry="6"/>
+            <ellipse cx="900" cy="372" rx="16" ry="7"/>
+            <ellipse cx="200" cy="390" rx="20" ry="8"/>
+          </g>
+          <!-- Foreground mesa edge -->
+          <path fill="#2a1f18" d="M0 430 Q300 400 600 425 T1200 415 T1440 430 L1440 520 L0 520 Z"/>
+          <!-- Dashed flight path / contrail -->
+          <path class="contrail" fill="none" stroke="#f5e6d3" stroke-width="1.5" stroke-dasharray="8 10" opacity="0.55"
+                d="M80 90 Q400 40 720 70 T1360 50"/>
+          <!-- Aircraft silhouette -->
+          <g transform="translate(1180,48) rotate(-8)" fill="#f5e6d3" opacity="0.85">
+            <ellipse cx="0" cy="0" rx="22" ry="3.5"/>
+            <path d="M-4 0 L-14 -14 L-8 -14 L2 0 Z"/>
+            <path d="M-4 0 L-14 14 L-8 14 L2 0 Z"/>
+            <path d="M16 0 L22 -6 L24 -6 L20 0 L24 5 L22 5 Z"/>
+          </g>
+        </svg>
+      </div>
+
       <div class="wrap hero-inner">
-        <p class="eyebrow">Strathmore, AB · Remote</p>
-        <h1 id="hero-heading">Aaron Lake</h1>
-        <p class="role">Engineering Director · Software Architect</p>
-        <p class="lede">
-          Hands-on engineering leader with 20+ years building software for charter aviation,
-          higher education, ecommerce, and digital music. I lead local and remote teams,
-          set architecture, and still write code — preferring open source and pragmatic delivery.
-        </p>
-        <ul class="hero-links" aria-label="Profiles">
-          <li><a href="https://www.linkedin.com/in/aaronofthelake" rel="noopener noreferrer">LinkedIn</a></li>
-          <li><a href="https://github.com/aaronofthelake" rel="noopener noreferrer">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/company/90430647/" rel="noopener noreferrer">Badlands Technologies</a></li>
-        </ul>
+        <div class="hero-card">
+          <div class="hero-photo-wrap">
+            <img class="hero-photo" src="assets/aaron-headshot.jpg" width="200" height="200"
+                 alt="Portrait of Aaron Lake" decoding="async">
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <span class="hdg-badge" aria-hidden="true">HDG 270°</span>
+              Strathmore, AB · Remote
+            </p>
+            <h1 id="hero-heading">Aaron Lake</h1>
+            <p class="role">Engineering Director · Software Architect</p>
+            <p class="lede">
+              Hands-on engineering leader with 20+ years building software for charter aviation,
+              higher education, ecommerce, and digital music. I lead local and remote teams,
+              set architecture, and still write code — preferring open source and pragmatic delivery.
+            </p>
+            <ul class="hero-links" aria-label="Profiles">
+              <li>
+                <a class="btn btn-primary" href="https://www.linkedin.com/in/aaronofthelake" rel="noopener noreferrer">
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a class="btn btn-ghost" href="https://github.com/aaronofthelake" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a class="btn btn-ghost" href="https://www.linkedin.com/company/90430647/" rel="noopener noreferrer">
+                  Badlands Technologies
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- altitude divider -->
+    <div class="flight-strip" aria-hidden="true">
+      <div class="wrap flight-strip-inner">
+        <span>ALT 3,500</span>
+        <span class="strip-line"></span>
+        <span>BADLANDS · AB</span>
+        <span class="strip-line"></span>
+        <span>HDG 270°</span>
+      </div>
+    </div>
+
     <section id="work" class="section" aria-labelledby="work-heading">
       <div class="wrap">
-        <h2 id="work-heading">What I do</h2>
+        <div class="section-head">
+          <h2 id="work-heading">What I do</h2>
+          <p class="section-kicker">Four instruments on the panel</p>
+        </div>
         <div class="card-grid">
           <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="18" r="7" stroke="currentColor" stroke-width="2"/>
+                <path d="M10 40c2-8 8-12 14-12s12 4 14 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="36" cy="14" r="4" stroke="currentColor" stroke-width="1.75"/>
+                <path d="M32 28c1.5-3 4-5 7-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h3>Engineering leadership</h3>
             <p>
               Lead local and remote teams through architecture, delivery, QA,
@@ -57,6 +186,14 @@
             </p>
           </article>
           <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="12" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+                <rect x="26" y="12" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+                <rect x="17" y="28" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+                <path d="M15 22v3h18v-3M24 25v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h3>Software architecture</h3>
             <p>
               Design platforms that last: GraphQL gateways, API contracts, ERP systems,
@@ -64,6 +201,14 @@
             </p>
           </article>
           <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="24" r="5" stroke="currentColor" stroke-width="2"/>
+                <circle cx="36" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                <circle cx="36" cy="36" r="5" stroke="currentColor" stroke-width="2"/>
+                <path d="M17 22l14-8M17 26l14 8" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
             <h3>GraphQL &amp; API platforms</h3>
             <p>
               Schema-first API design, Apollo/Node gateways that unify internal data and
@@ -71,6 +216,14 @@
             </p>
           </article>
           <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="14" width="28" height="22" rx="3" stroke="currentColor" stroke-width="2"/>
+                <path d="M18 24h12M18 30h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M24 8v6M20 10l4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="34" cy="20" r="2" fill="currentColor"/>
+              </svg>
+            </div>
             <h3>Putting AI to work safely</h3>
             <p>
               AI-assisted design, coding, and documentation, plus internal tooling —
@@ -83,10 +236,17 @@
     </section>
 
     <section id="experience" class="section section-alt" aria-labelledby="exp-heading">
+      <div class="topo-bg" aria-hidden="true"></div>
       <div class="wrap">
-        <h2 id="exp-heading">Selected experience</h2>
+        <div class="section-head">
+          <h2 id="exp-heading">Selected experience</h2>
+          <p class="section-kicker">Flight path</p>
+        </div>
         <ol class="timeline">
           <li>
+            <div class="waypoint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2l3 7h7l-5.5 4.5L19 22l-7-4.5L5 22l2.5-8.5L2 9h7z"/></svg>
+            </div>
             <div class="timeline-meta">
               <h3>Founder &amp; Principal Consultant</h3>
               <p class="org">Badlands Technologies · Strathmore, AB (Remote)</p>
@@ -99,6 +259,9 @@
             </p>
           </li>
           <li>
+            <div class="waypoint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>
+            </div>
             <div class="timeline-meta">
               <h3>Software Architect</h3>
               <p class="org">Honorlock · Remote from Alberta</p>
@@ -111,6 +274,9 @@
             </p>
           </li>
           <li>
+            <div class="waypoint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>
+            </div>
             <div class="timeline-meta">
               <h3>Director of Software Development</h3>
               <p class="org">Avro Strategies · Calgary, AB</p>
@@ -123,6 +289,9 @@
             </p>
           </li>
           <li>
+            <div class="waypoint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>
+            </div>
             <div class="timeline-meta">
               <h3>Earlier roles</h3>
               <p class="org">Architecture &amp; platform work · Calgary, Victoria, Vancouver</p>
@@ -143,39 +312,127 @@
 
     <section id="writing" class="section" aria-labelledby="writing-heading">
       <div class="wrap">
-        <h2 id="writing-heading">Writing</h2>
-        <p class="section-intro">
-          Notes on architecture, delivery, and AI — published through
-          <a href="https://www.linkedin.com/company/90430647/" rel="noopener noreferrer">Badlands Technologies</a>.
-        </p>
-        <ul class="writing-list">
-          <li>
-            <a href="https://www.linkedin.com/feed/update/urn:li:share:7517788303534776321/" rel="noopener noreferrer">
-              An agent that fails silently is worse than no agent
+        <div class="section-head">
+          <h2 id="writing-heading">Writing</h2>
+          <p class="section-kicker">
+            Notes on architecture, delivery, and AI — published through
+            <a href="https://www.linkedin.com/company/90430647/" rel="noopener noreferrer">Badlands Technologies</a>.
+          </p>
+        </div>
+        <div class="writing-grid">
+          <article class="writing-card writing-card-featured">
+            <a class="writing-card-link" href="https://www.linkedin.com/feed/update/urn:li:share:7517788303534776321/" rel="noopener noreferrer">
+              <img class="writing-thumb" src="assets/article20_silent_agent.jpg" width="800" height="420"
+                   alt="Illustration: a robot asleep at a desk in Alberta badlands after finishing its work"
+                   decoding="async">
+              <div class="writing-card-body">
+                <span class="tag">Published</span>
+                <h3>An agent that fails silently is worse than no agent</h3>
+                <p>Why quiet failures beat loud crashes — and how to build agents that leave a receipt.</p>
+              </div>
             </a>
-            <span class="tag">Published</span>
-          </li>
-          <li>
-            <span class="pending-title">Write the schema first and argue about it early</span>
-            <span class="tag tag-muted">Coming soon</span>
-          </li>
-          <li>
-            <span class="pending-title">Modernizing a system that can't stop running</span>
-            <span class="tag tag-muted">Coming soon</span>
-          </li>
-          <li>
-            <span class="pending-title">AI makes a great first draft and a terrible source of truth</span>
-            <span class="tag tag-muted">Coming soon</span>
-          </li>
-          <li>
-            <span class="pending-title">One API, many clients: what GraphQL actually bought us</span>
-            <span class="tag tag-muted">Coming soon</span>
-          </li>
-        </ul>
+          </article>
+
+          <article class="writing-card">
+            <div class="writing-thumb writing-thumb-svg" aria-hidden="true">
+              <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" role="img">
+                <title>Coming soon: schema-first design</title>
+                <defs>
+                  <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#3d2a1f"/><stop offset="100%" stop-color="#6b3d2a"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="210" fill="url(#t1)"/>
+                <path fill="#8a4a38" d="M0 140 Q100 110 200 130 T400 120 L400 210 L0 210 Z"/>
+                <rect x="80" y="50" width="100" height="70" rx="6" fill="none" stroke="#e8a05c" stroke-width="2"/>
+                <rect x="220" y="50" width="100" height="70" rx="6" fill="none" stroke="#9caf88" stroke-width="2"/>
+                <path d="M180 85h40" stroke="#f5e6d3" stroke-width="2" stroke-dasharray="4 4"/>
+                <text x="200" y="185" text-anchor="middle" fill="#f5e6d3" font-family="system-ui,sans-serif" font-size="14" opacity="0.8">schema first</text>
+              </svg>
+            </div>
+            <div class="writing-card-body">
+              <span class="tag tag-muted">Coming soon</span>
+              <h3>Write the schema first and argue about it early</h3>
+            </div>
+          </article>
+
+          <article class="writing-card">
+            <div class="writing-thumb writing-thumb-svg" aria-hidden="true">
+              <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" role="img">
+                <title>Coming soon: modernization in flight</title>
+                <defs>
+                  <linearGradient id="t2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#c45c3e"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="210" fill="url(#t2)"/>
+                <path fill="#7a3d28" d="M0 130 L80 90 L100 90 L140 130 L180 70 L210 70 L260 130 L320 85 L350 85 L400 130 L400 210 L0 210 Z"/>
+                <path fill="none" stroke="#f5e6d3" stroke-width="1.5" stroke-dasharray="6 8" d="M40 50 Q200 20 360 55" opacity="0.7"/>
+                <g transform="translate(300,45)" fill="#f5e6d3" opacity="0.9">
+                  <ellipse cx="0" cy="0" rx="16" ry="2.5"/>
+                  <path d="M-3 0 L-10 -10 L-6 -10 L1 0 Z"/>
+                </g>
+                <text x="200" y="185" text-anchor="middle" fill="#f5e6d3" font-family="system-ui,sans-serif" font-size="14" opacity="0.8">still flying</text>
+              </svg>
+            </div>
+            <div class="writing-card-body">
+              <span class="tag tag-muted">Coming soon</span>
+              <h3>Modernizing a system that can't stop running</h3>
+            </div>
+          </article>
+
+          <article class="writing-card">
+            <div class="writing-thumb writing-thumb-svg" aria-hidden="true">
+              <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" role="img">
+                <title>Coming soon: AI as first draft</title>
+                <defs>
+                  <linearGradient id="t3" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#2a3d2e"/><stop offset="100%" stop-color="#5b3a6b"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="210" fill="url(#t3)"/>
+                <rect x="90" y="40" width="220" height="100" rx="8" fill="#1c1917" opacity="0.5" stroke="#9caf88" stroke-width="1.5"/>
+                <path d="M110 70h120M110 90h90M110 110h140" stroke="#e8a05c" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                <circle cx="280" cy="70" r="10" fill="none" stroke="#9caf88" stroke-width="2"/>
+                <path d="M275 70l4 4 8-8" stroke="#9caf88" stroke-width="2" fill="none"/>
+                <text x="200" y="185" text-anchor="middle" fill="#f5e6d3" font-family="system-ui,sans-serif" font-size="14" opacity="0.8">draft · check · confirm</text>
+              </svg>
+            </div>
+            <div class="writing-card-body">
+              <span class="tag tag-muted">Coming soon</span>
+              <h3>AI makes a great first draft and a terrible source of truth</h3>
+            </div>
+          </article>
+
+          <article class="writing-card">
+            <div class="writing-thumb writing-thumb-svg" aria-hidden="true">
+              <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" role="img">
+                <title>Coming soon: GraphQL payoff</title>
+                <defs>
+                  <linearGradient id="t4" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#3d2a1f"/><stop offset="100%" stop-color="#1e1b4b"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="210" fill="url(#t4)"/>
+                <circle cx="200" cy="95" r="28" fill="none" stroke="#e8a05c" stroke-width="2.5"/>
+                <circle cx="100" cy="60" r="14" fill="none" stroke="#9caf88" stroke-width="2"/>
+                <circle cx="300" cy="60" r="14" fill="none" stroke="#9caf88" stroke-width="2"/>
+                <circle cx="100" cy="140" r="14" fill="none" stroke="#9caf88" stroke-width="2"/>
+                <circle cx="300" cy="140" r="14" fill="none" stroke="#9caf88" stroke-width="2"/>
+                <path d="M114 68 L176 88M286 68 L224 88M114 132 L176 102M286 132 L224 102" stroke="#f5e6d3" stroke-width="1.5" opacity="0.6"/>
+                <text x="200" y="185" text-anchor="middle" fill="#f5e6d3" font-family="system-ui,sans-serif" font-size="14" opacity="0.8">one API · many clients</text>
+              </svg>
+            </div>
+            <div class="writing-card-body">
+              <span class="tag tag-muted">Coming soon</span>
+              <h3>One API, many clients: what GraphQL actually bought us</h3>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section id="contact" class="section section-alt" aria-labelledby="contact-heading">
+    <section id="contact" class="section section-contact" aria-labelledby="contact-heading">
       <div class="wrap contact-inner">
         <h2 id="contact-heading">Contact</h2>
         <p>Based in Strathmore, Alberta. Happy to connect.</p>
