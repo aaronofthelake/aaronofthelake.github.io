@@ -175,8 +175,8 @@ nav a:hover { color: var(--ink); }
 .hero-shade {
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(20, 14, 10, 0.45) 0%, rgba(20, 14, 10, 0.2) 45%, rgba(20, 14, 10, 0.6) 100%),
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(20, 14, 10, 0.25), transparent 75%);
+    linear-gradient(180deg, rgba(20, 14, 10, 0.15) 0%, rgba(20, 14, 10, 0.05) 50%, rgba(20, 14, 10, 0.35) 100%),
+    radial-gradient(ellipse 60% 60% at 35% 50%, rgba(20, 14, 10, 0.12), transparent 75%);
 }
 
 .hero-inner {
