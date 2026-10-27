@@ -76,7 +76,7 @@
 <li>An MCP lookup server with four tools: <code>get_checkpoint</code> (latest saved state plus recent session digests), <code>get_history</code> (ranked search), <code>get_messages</code> (full text of specific messages) and <code>save_checkpoint</code>. Every output has a hard size cap, so a lookup costs a few thousand characters, not the whole chat.</li>
 </ol>
 <p><strong>The key point:</strong> A lookup server by itself saves nothing, because the chat still rereads its own history every turn. The savings come from the reset; bot-memory removes the reason not to reset.</p>
-<p>Grok Bot can't reset a chat in place, so a "reset" means a new bot that replaces the old one. bot-memory links the new bot to its predecessor, so its lookups cover the old chat's full history as if it were its own. Bots can also be excluded entirely by config: excluded history is never copied, and every tool refuses it.</p>
+<p>We couldn't reset a chat in place, so for us a "reset" meant a new bot that replaces the old one. bot-memory links the new bot to its predecessor, so its lookups cover the old chat's full history as if it were its own. Bots can also be excluded entirely by config: excluded history is never copied, and every tool refuses it.</p>
 <h2>The first real reset: Oct 24, 2026</h2>
 <p>On Oct 24, 2026, we reset our usage-tracking bot, TokenAgent, a long-running chat with weeks of history.</p>
 <ol>
