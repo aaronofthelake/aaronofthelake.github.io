@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resetting a Grok Bot chat is how you stop paying to reread a long history, but the bot&#x27;s memory doesn&#x27;t move with it on its own. We built a reset process for our fleet: full chat backups, searchable bot-memory history, a short written handoff, and routines that keep their exact on or paused state. Along the way we learned that in-app memory can&#x27;t be exported, and that our readiness check had passed against a stale copy.">
+  <meta name="author" content="Aaron Lake">
+  <title>Resetting a Grok Bot is easy. Keeping its memory isn&#x27;t. — Aaron Lake</title>
+  <link rel="canonical" href="https://aaronofthelake.github.io/writing/bot-memory/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Resetting a Grok Bot is easy. Keeping its memory isn&#x27;t.">
+  <meta property="og:description" content="Resetting a Grok Bot chat is how you stop paying to reread a long history, but the bot&#x27;s memory doesn&#x27;t move with it on its own. We built a reset process for our fleet: full chat backups, searchable…">
+  <meta property="og:url" content="https://aaronofthelake.github.io/writing/bot-memory/">
+  <meta property="og:image" content="https://aaronofthelake.github.io/assets/article_botmemory_1280.jpg">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="../../#top">
+        <svg class="logo-mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M4 22 L16 6 L28 22 Z" opacity="0.9"/>
+          <path fill="none" stroke="currentColor" stroke-width="1.5" d="M6 20 Q16 12 26 20" opacity="0.7"/>
+          <circle cx="16" cy="18" r="2" fill="currentColor"/>
+        </svg>
+        <span>Aaron Lake</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="../../#work">What I do</a></li>
+          <li><a href="../../#experience">Experience</a></li>
+          <li><a href="../../#writing">Writing</a></li>
+          <li><a href="../../#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="section article-page" aria-labelledby="article-title">
+      <div class="wrap article-wrap">
+        <p class="article-back"><a href="../../#writing">← All writing</a></p>
+        <h1 id="article-title">Resetting a Grok Bot is easy. Keeping its memory isn&#x27;t.</h1>
+        <p class="article-byline">Aaron Lake · <a href="https://www.linkedin.com/company/90430647/" rel="noopener noreferrer">Badlands Technologies</a></p>
+        <img class="article-hero" src="../../assets/article_botmemory_1280.jpg" width="1280" height="720"
+             alt="Illustration: in Alberta badlands, an old robot waves goodbye from a pile of chat history while a new robot steps out of a glowing reboot pod, linked by a golden cable to a vault where its memories are stored">
+        <p class="article-lede">Resetting a Grok Bot chat is how you stop paying to reread a long history, but the bot&#x27;s memory doesn&#x27;t move with it on its own. We built a reset process for our fleet: full chat backups, searchable bot-memory history, a short written handoff, and routines that keep their exact on or paused state. Along the way we learned that in-app memory can&#x27;t be exported, and that our readiness check had passed against a stale copy.</p>
+        <div class="article-body">
+<h2>Why long chats need resetting</h2>
+<p>Grok Bot sends the whole chat, plus instructions, memory and tool schemas, on every turn, and only summarizes near the context limit. So a one-line reply in a 130k chat costs about as much as a long message in that chat.</p>
+<blockquote>
+<p>"…isn't intended behavior." (Cursor staff, on Grok Bot sending the full transcript every turn, Cursor forum)</p>
+</blockquote>
+<p>Source: <a rel="noopener noreferrer" href="https://forum.cursor.com/t/grok-bot-prune-compact-an-agent-s-context-without-creating-a-new-bot/168333">Cursor forum thread</a></p>
+<p>Caveat: how the app selects context is our inference from usage data, not from app internals.</p>
+<h2>What long chats cost us</h2>
+<p>Oct 23, 2026, points by cost type (1 point = 1% of the Grok Bot weekly allowance):</p>
+<ul>
+<li>Rereading context (cache reads): 16.0 pts</li>
+<li>Cache writes, incl. 76 cold resends: 3.5 pts</li>
+<li>Other fresh input: 0.6 pts</li>
+</ul>
+<p>On Oct 23, 2026, our Grok Bot fleet used 20 points of its weekly allowance in one day: about 200 chat turns across 8 bots, with most chats sitting at 80k to 140k tokens of context.</p>
+<p>Breaking the day down from the usage export, there was no runaway loop and no stuck routine. It was volume, and almost all of it was rereading. Requests made at 60k context or more accounted for 16.2 of the 20 points. About 1.9 points came from 76 "cold cache" requests, where a chat sat idle and then re-sent its whole 50k to 140k context. Output tokens barely registered.</p>
+<p>In tokens, 1 point is about 9.5M cache-read tokens or about 2.5M fresh input tokens. That is an estimate (±20%), from a regression on our own usage data.</p>
+<p>The obvious fix is to reset long chats. The reason nobody does is just as obvious: the bot forgets what you were working on.</p>
+<h2>What we built: bot-memory</h2>
+<p>bot-memory makes a reset cheap to recover from. It has two parts.</p>
+<ol>
+<li>A local, per-bot history cache. A small script copies each bot's chat history into a local SQLite database with full-text search every 15 minutes. It is read-only against the source, uses no AI and costs zero tokens. Each sync takes about 0.05 to 2 seconds. The cache holds 7,140 messages, matching the source with 0 missing and 0 duplicates.</li>
+<li>An MCP lookup server with four tools: <code>get_checkpoint</code> (latest saved state plus recent session digests), <code>get_history</code> (ranked search), <code>get_messages</code> (full text of specific messages) and <code>save_checkpoint</code>. Every output has a hard size cap, so a lookup costs a few thousand characters, not the whole chat.</li>
+</ol>
+<p><strong>The key point:</strong> A lookup server by itself saves nothing, because the chat still rereads its own history every turn. The savings come from the reset; bot-memory removes the reason not to reset.</p>
+<p>Grok Bot can't reset a chat in place, so a "reset" means a new bot that replaces the old one. bot-memory links the new bot to its predecessor, so its lookups cover the old chat's full history as if it were its own. Bots can also be excluded entirely by config: excluded history is never copied, and every tool refuses it.</p>
+<h2>The first real reset: Oct 24, 2026</h2>
+<p>On Oct 24, 2026, we reset our usage-tracking bot, TokenAgent, a long-running chat with weeks of history.</p>
+<ol>
+<li><strong>Back up first.</strong> A fresh, checksummed backup of the chat history is a required first step, and no reset happens without the owner's approval.</li>
+<li><strong>Write the handoff.</strong> The outgoing chat wrote its own handoff (routines word for word, memory facts, open work, benchmark numbers and their gaps) and saved two checkpoints to bot-memory.</li>
+<li><strong>Create and link the new bot.</strong> Its first <code>get_checkpoint</code> call showed 279 messages from its predecessor and 0 of its own. The chat history carried over in full; the bot's in-app memory was another story (see below).</li>
+<li><strong>Move routines without double runs.</strong> The new chat recreated its scheduled routine word for word; the old chat paused its copy (paused, not deleted), so it never ran twice.</li>
+<li><strong>Carry over memory.</strong> 34 memory facts copied word for word from the bot's own self-report, since memory lives on the app server, plus a short pinned recap and a lookup rule: check bot-memory first, never guess.</li>
+<li><strong>Quiz the new bot.</strong> Four questions about past decisions, numbers and file locations: 4 of 4 correct, 0 made up, from 3 lookups, graded against the bot's saved pre-reset checkpoints.</li>
+<li><strong>Keep the old chat.</strong> Renamed and hidden, not deleted.</li>
+</ol>
+<p>What the reset cost: the day's burn was about 10 points, and the one-time reset and handoff work was about 2.4 of those. That is an estimate with medium confidence, since other bots shared some of those hours.</p>
+<h2>What moving a bot's memory taught us</h2>
+<p>The switch worked, but the days after it taught us more than the build did. If you run an agent fleet, these are the four things we would tell you first.</p>
+<ol>
+<li>In-app memory may not be exportable, so plan for that before you switch. The memory files on our box turned out to be a stale Oct 23 copy whose content stopped around Sept 15. Newer memory lived only on the app server, with no export tool. Our trading bot rebuilt its handoff by recalling its own server memory, which returns about 14 results per query, and reached 75 of its 93 profile facts; 18 could not be recovered that way.</li>
+<li>A check is only as good as what it compares against. Our readiness check passed because it compared the handoff to that stale copy, so the switch was called ready when memory after Sept 15 had never been verified. Before you trust a green check, confirm its reference is current and complete.</li>
+<li>Keep it simple. Our process grew into huge copied handoffs and repeated re-checks, and that cost days. Where we landed on Oct 27: full chat backups, searchable bot-memory history, and a short written handoff. No hidden archive bots.</li>
+<li>Carry routines over with their exact state. A routine that was on stays on, and a paused routine must never come back on. Our handoff format now requires an explicit enabled or paused state for every routine, and the switch checks that the old bot's copies are paused.</li>
+</ol>
+<p><strong>The takeaway:</strong> The memory you can see on disk may not be the memory your bot is using. Verify against the live source before you call a switch ready.</p>
+<h2>Testing recall before trusting it</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Correct</th>
+<th>Made up</th>
+<th>Lookups</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First recall test</td>
+<td>4 of 5</td>
+<td>0</td>
+<td>11</td>
+</tr>
+<tr>
+<td>After three search fixes</td>
+<td>4 of 4</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Reset dry run (test bot)</td>
+<td>5 of 5</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Real reset, Oct 24 (graded against saved pre-reset checkpoints)</td>
+<td>4 of 4</td>
+<td>0</td>
+<td>3</td>
+</tr>
+</tbody>
+</table></div>
+<p>The first miss was a benchmark figure buried in a long message that search didn't surface. The test suite grew from 23 tests at the first milestone to 271 by Oct 26, all passing on both machines.</p>
+<h2>Before and after</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weekly points, week of Oct 22–29</td>
+<td>26.1 by 10:11 PM MDT Oct 23</td>
+<td>In a follow-up post</td>
+</tr>
+<tr>
+<td>Points on a busy weekday</td>
+<td>about 20 (Oct 23)</td>
+<td>In a follow-up post</td>
+</tr>
+<tr>
+<td>Points from rereading context</td>
+<td>about 16 of 20</td>
+<td>In a follow-up post</td>
+</tr>
+<tr>
+<td>Largest chat contexts</td>
+<td>about 96k to 139k tokens</td>
+<td>In a follow-up post</td>
+</tr>
+<tr>
+<td>Recall after a reset</td>
+<td>n/a</td>
+<td>4 of 4, 3 lookups (1 reset)</td>
+</tr>
+</tbody>
+</table></div>
+<p>We'll share the after numbers in a follow-up post, using the same measures on a comparable weekday, after more resets and after moving coding out of chat. Per-bot numbers are estimates: the usage export has no bot field, so usage is attributed by timing.</p>
+<h2>Lessons from the build</h2>
+<ol>
+<li>Don't code inside bot chats. On Oct 23, one bot doing coding in chat cost about 4 to 5.5 points while the separate Cursor Models allowance sat at 3%. Tip for legacy Cursor plan users: code in local Cursor (CLI or editor) on a Grok model, which bills to Cursor Models. We built bot-memory itself this way.</li>
+<li>Set up the Cursor CLI on day one. When we needed ours, the stored login had lapsed and the newest version wouldn't start on an older macOS. Our bot template now includes a setup check that fails if the CLI isn't installed, signed in and set to a Grok model.</li>
+<li>Phone-only users have no local fallback. Our inference from the default setup: coding happens in the bot chat or its cloud instance, so phone-only users have no local Cursor to move it to.</li>
+<li>Measure before you cut. We found the coding-in-chat cost only by measuring usage per bot. The fix wasn't using the bots less; it was where the work ran and how long the chats got.</li>
+<li>Plan for the boring bugs: duplicate rows from the source re-indexing (1,384 collapsed), a search miss on exact numbers, a tool list cached by server name, and stale server processes. Each is now covered by a test or a deploy step.</li>
+</ol>
+<h2>What's next</h2>
+<p>We'll run the after-benchmark, reset more of our longest chats, and share the results in a follow-up post. We plan to release the code as a Grok Bot template, so other fleets can use the same reset process. If you run a bot fleet and have measured context cost differently, I'd like to compare notes.</p>
+        </div>
+        <p class="article-back article-back-end"><a href="../../#writing">← All writing</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="y">2026</span> Aaron Lake.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
