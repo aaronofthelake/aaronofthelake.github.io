@@ -522,20 +522,6 @@ nav a:hover { color: var(--ink); }
   background: var(--bg-alt);
 }
 
-.writing-thumb {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  background: var(--bg-alt);
-}
-
-.writing-thumb-svg svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  aspect-ratio: 400 / 210;
-}
-
 .writing-card-body {
   padding: 1.15rem 1.25rem 1.35rem;
   display: flex;
@@ -573,11 +559,6 @@ nav a:hover { color: var(--ink); }
   padding: 0.22rem 0.55rem;
   border-radius: 999px;
   white-space: nowrap;
-}
-
-.tag-muted {
-  color: var(--ink-muted);
-  background: var(--bg-alt);
 }
 
 /* Contact */
